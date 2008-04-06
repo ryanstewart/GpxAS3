@@ -2,6 +2,7 @@ package com.adobe.gpslib.gpx
 {
 	import com.adobe.gpslib.GPX;
 	import com.adobe.gpslib.gpx.waypoint.GpsFix;
+	import com.adobe.utils.DateUtil;
 	
 	[Bindable]
 	public class Waypoint
@@ -152,6 +153,8 @@ package com.adobe.gpslib.gpx
 				var waypoint : Waypoint = new Waypoint(lat, lon);
 				waypoint.elevation = xml.ele;
 				var strTime : String = xml.time;
+				if( strTime != "" ) { waypoint.time = DateUtil.parseW3CDTF(strTime); }
+				/*
 				var year : Number = Number(strTime.substring(0,4));
 				var month : Number = Number(strTime.substring(5,7));
 				var day : Number = Number(strTime.substring(8,10));
@@ -165,6 +168,7 @@ package com.adobe.gpslib.gpx
 					waypoint.time.setUTCHours(hours, minutes, seconds);
 					
 				}
+				*/
 				waypoint.magneticVariation = xml.magvar;
 				waypoint.geoIdHeight = xml.geoidheight;
 				waypoint.name = xml.name;
