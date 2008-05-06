@@ -3,6 +3,7 @@ package com.adobe.gpslib
 	import com.adobe.gpslib.gpx.Route;
 	import com.adobe.gpslib.gpx.Track;
 	import com.adobe.gpslib.gpx.Waypoint;
+	import com.adobe.gpslib.gpx.loader.GPXLoaderFactory;
 
 	[Bindable]
 	public class GPX
@@ -32,60 +33,17 @@ package com.adobe.gpslib
 			
 		}
 		
-		public function newGpxFromXml(xml:XML) : GPX
+		public static function load(gpx_xml:XML):GPX
 		{
-			namespace gpxNS = "http://www.topografix.com/GPX/1/1";
-			use namespace gpxNS;
-			
-			var xmlList : XMLList = xml.children();
-			if( xml.name() == 'http://www.topografix.com/GPX/1/1::gpx' )
-			{
-				this.name = xml.metadata.name;
-				this.description = xml.metadata.desc;
-				this.author = xml.metadata.author;
-				this.link = xml.metadata.link.@href;
-				this.linkText = xml.metadata.link.text;
-				this.linkType = xml.metadata.link.type;
-				// Dealing with Time
-				var strTime : String = xml.metadata.time;
-				var year : Number = Number(strTime.substring(0,4));
-				var month : Number = Number(strTime.substring(5,7));
-				var day : Number = Number(strTime.substring(8,10));
-				var hours : Number = Number(strTime.substring(11,13));
-				var minutes : Number = Number(strTime.substring(14,16));
-				var seconds : Number = Number(strTime.substring(17,19));
-				if( strTime != "" )
-				{
-					this.time = new Date();
-					this.time.setUTCFullYear(year, month, day);
-					this.time.setUTCHours(hours, minutes, seconds);
-				}
-				// End of Time Logic
-				this.keywords = xml.metadata.keywords;
-				this.minLatitude = xml.metadata.bounds.@minlat;
-				this.minLongitude = xml.metadata.bounds.@minlon;
-				this.maxLatitude = xml.metadata.bounds.@maxlat;
-				this.maxLongitude = xml.metadata.bounds.@maxlon;
-				
-				for( var i:Number = 0; i < xmlList.length(); i++ )
-				{
-					if( xmlList[i].name() == 'http://www.topografix.com/GPX/1/1::wpt' ) {
-						var wpt : Waypoint = Waypoint.createWaypointFromXML(xmlList[i]);
-						this.arrWaypoints.push(wpt);
-					} else if( xmlList[i].name() == 'http://www.topografix.com/GPX/1/1::trk' ) {
-						var trk : Track = Track.createTrackFromXML(xmlList[i]);
-						this.arrTracks.push(trk);
-					} else if( xmlList[i].name() == 'http://www.topografix.com/GPX/1/1::rte') {
-						var rte : Route = Route.createRouteFromXML(xmlList[i]);
-						this.arrRoutes.push(rte);
-					}
-				}				
-			}else if ( xml.name() == 'http://www.topografix.com/GPX/1/0::gpx' ) {
-				trace(xml.name);
-			}
-			return this;	
+			return GPXLoaderFactory.loadGPX(gpx_xml);
 		}
 		
+		//Depricated
+		public function newGpxFromXml(xml:XML) : GPX
+		{
+			return GPX.load(xml);
+		
+		}
 		public function createXmlGpx() : XML
 		{
 			var gpx : XML = <gpx></gpx>;

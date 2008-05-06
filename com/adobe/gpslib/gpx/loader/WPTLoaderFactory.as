@@ -1,0 +1,32 @@
+package com.adobe.gpslib.gpx.loader
+{
+	import com.adobe.gpslib.gpx.Waypoint;
+	import com.adobe.gpslib.gpx.loader.waypoint.WPTLoader1_1;
+	
+	public class WPTLoaderFactory
+	{
+		public function WPTLoaderFactory()
+		{
+		}
+		public static function load(wpt_xml:XML):Waypoint
+		{
+				var name:String = wpt_xml.name();
+				trace(name);
+				switch ( name ) 
+				{
+					case "http://www.topografix.com/GPX/1/1::wpt":
+						return WPTLoader1_1.load(wpt_xml);
+						break;
+					case "http://www.topografix.com/GPX/1/1::trkpt":
+						return WPTLoader1_1.load(wpt_xml);
+						break;
+					case "http://www.topografix.com/GPX/1/1::rtept":
+						return WPTLoader1_1.load(wpt_xml);
+						break;
+					default:
+						return null;
+				}
+				
+			}
+	}
+}
