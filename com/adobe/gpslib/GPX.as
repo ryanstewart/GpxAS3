@@ -3,7 +3,7 @@ package com.adobe.gpslib
 	import com.adobe.gpslib.gpx.Route;
 	import com.adobe.gpslib.gpx.Track;
 	import com.adobe.gpslib.gpx.Waypoint;
-	
+
 	[Bindable]
 	public class GPX
 	{		
@@ -80,6 +80,8 @@ package com.adobe.gpslib
 						this.arrRoutes.push(rte);
 					}
 				}				
+			}else if ( xml.name() == 'http://www.topografix.com/GPX/1/0::gpx' ) {
+				trace(xml.name);
 			}
 			return this;	
 		}
