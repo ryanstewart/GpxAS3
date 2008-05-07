@@ -51,7 +51,8 @@ package com.adobe.gpslib.gpx.loader.waypoint
 			waypoint.ageOfGpsData = xml.ageofdgpsdata;
 			waypoint.dgpsid = xml.dgpsid;
 			
-			
+			namespace geoNS = "http://www.groundspeak.com/cache/1/0";
+			use namespace geoNS;
 			if ( xml.cache.length() != 0 )
 			{
 				waypoint.cache = CacheLoaderFactory.load(xml.cache[0]);
