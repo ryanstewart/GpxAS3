@@ -12,6 +12,7 @@ package com.adobe.gpslib.gpx
 		private var _linkText : String;
 		private var _linkType : String;
 		private var _number : Number; // track number?
+		private var _type : String;
 		private var _trackSegment : Array; // Array of Track Points (waypoints)
 
 		public function Track(name:String, trackSegment : Array)
@@ -55,57 +56,14 @@ package com.adobe.gpslib.gpx
 		/* Track Number? */
 		public function set number (value:Number) : void { this._number = value; }	
 		public function get number () : Number { return this._number; }
+		
+		/* Track Type */
+		public function set type (value:String) : void {this._type = value; }
+		public function get type () : String { return this._type; }
 
 		/* Track Segments */
 		public function set trackSegment(value:Array) : void { this._trackSegment = value; }
 		public function get trackSegment() : Array { return this._trackSegment; }
-
-
-		public static function createTrackFromXML( xml:XML ) : Track
-		{
-			namespace gpxNS = "http://www.topografix.com/GPX/1/1";
-			use namespace gpxNS;
-			
-			if( xml.name() == 'http://www.topografix.com/GPX/1/1::trk' )
-			{
-				var name : String = xml.name;
-				var trackSegment : Array = getTrackSegments(xml.trkseg.children());
-				return new Track(name, trackSegment);
-			} else {
-				return null;
-			}
-		}
-		
-		public static function getTracks( xmlList:XMLList ) : Array
-		{
-			namespace gpxNS = "http://www.topografix.com/GPX/1/1";
-			use namespace gpxNS;
-			
-			var arrTempTracks : Array = new Array();
-			for( var i:Number = 0; i < xmlList.length(); i++ )
-			{
-				if( xmlList[i].name() == 'http://www.topografdix.com/GPX/1/1::trk' ) {
-					var trk : Track = createTrackFromXML(xmlList[i]);
-					arrTempTracks.push(trk);
-				}
-			}
-			
-			return arrTempTracks;			
-		}
-		
-		public static function getTrackSegments( xmlList:XMLList ) : Array
-		{
-			var trackSegment : Array = new Array();
-			for( var i:Number = 0; i < xmlList.length(); i++ )
-			{
-				if( xmlList[i].name() == 'http://www.topografix.com/GPX/1/1::trkpt' ) {
-					var wpt : Waypoint = Waypoint.createWaypointFromXML(xmlList[i]);
-					trackSegment.push(wpt);
-				}
-			}
-			
-			return trackSegment;				
-		}
 		
 		public function createXmlTrack() : XML
 		{

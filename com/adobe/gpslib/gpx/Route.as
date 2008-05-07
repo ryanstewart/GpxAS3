@@ -144,35 +144,6 @@ package com.adobe.gpslib.gpx
 		/*****
 		 * Helper Functions
 		 *****/
-
-		public static function createRouteFromXML( xml:XML ) : Route
-		{
-			namespace gpxNS = "http://www.topografix.com/GPX/1/1";
-			use namespace gpxNS;
-			
-			if( xml.name() == 'http://www.topografix.com/GPX/1/1::rte' )
-			{
-				var name : String = xml.name;
-				var routePoint : Array = getRoutePoints(xml.children());
-				return new Route(name, routePoint);
-			} else {
-				return null;
-			}
-		}
-		
-		public static function getRoutePoints( xmlList:XMLList ) : Array
-		{
-			var routePoint : Array = new Array();
-			for( var i:Number = 0; i < xmlList.length(); i++ )
-			{
-				if( xmlList[i].name() == 'http://www.topografix.com/GPX/1/1::rtept' ) {
-					var wpt : Waypoint = Waypoint.createWaypointFromXML(xmlList[i]);
-					routePoint.push(wpt);
-				}
-			}
-			
-			return routePoint;				
-		}
 		
 		public function createXmlRoute() : XML
 		{
