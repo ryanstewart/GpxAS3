@@ -42,7 +42,7 @@ package com.adobe.gpslib.gpx.loader.gpx
 			gpx.minLongitude = xml.metadata.bounds.@minlon;
 			gpx.maxLatitude = xml.metadata.bounds.@maxlat;
 			gpx.maxLongitude = xml.metadata.bounds.@maxlon;
-			
+		
 			for( var i:Number = 0; i < xmlList.length(); i++ )
 			{
 				if( xmlList[i].name() == 'http://www.topografix.com/GPX/1/1::wpt' ) {

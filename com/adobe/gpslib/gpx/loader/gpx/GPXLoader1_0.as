@@ -42,11 +42,22 @@ package com.adobe.gpslib.gpx.loader.gpx
 			gpx.maxLatitude = xml.bounds.@maxlat;
 			gpx.maxLongitude = xml.bounds.@maxlon;
 			
-			for( var i:Number = 0; i < xmlList.length(); i++ )
+			if ( XMLList(xml.wpt).length() > 0 )
+			{
+				for ( var j:int=0;j<xml.wpt.length();j++)
+				{
+					var wpt : Waypoint = WPTLoaderFactory.load(xml.wpt[j]);
+					gpx.arrWaypoints.push(wpt);
+				}
+			}
+			
+			/*for( var i:Number = 0; i < xmlList.length(); i++ )
 			{
 				var ln:String = xmlList[i].name();
+				var obj:XMLList = xml.wpt;
+				trace(obj.length());
 				if( ln == 'http://www.topografix.com/GPX/1/0::wpt' ) {
-					var wpt : Waypoint = WPTLoaderFactory.load(xmlList[i]);
+					var wpt : Waypoint = WPTLoaderFactory.load(xmlList["wpt"]);
 					gpx.arrWaypoints.push(wpt);
 				} else if( ln == 'http://www.topografix.com/GPX/1/0::trk' ) {
 					//var trk : Track = Track.createTrackFromXML(xmlList[i]);
@@ -55,7 +66,7 @@ package com.adobe.gpslib.gpx.loader.gpx
 					//var rte : Route = Route.createRouteFromXML(xmlList[i]);
 					//gpx.arrRoutes.push(rte);
 				}
-			}
+			}*/
 			
 			return gpx;
 				

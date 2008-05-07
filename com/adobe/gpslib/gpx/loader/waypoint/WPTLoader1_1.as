@@ -21,21 +21,7 @@ package com.adobe.gpslib.gpx.loader.waypoint
 				waypoint.elevation = xml.ele;
 				var strTime : String = xml.time;
 				if( strTime != "" ) { waypoint.time = DateUtil.parseW3CDTF(strTime); }
-				/*
-				var year : Number = Number(strTime.substring(0,4));
-				var month : Number = Number(strTime.substring(5,7));
-				var day : Number = Number(strTime.substring(8,10));
-				var hours : Number = Number(strTime.substring(11,13));
-				var minutes : Number = Number(strTime.substring(14,16));
-				var seconds : Number = Number(strTime.substring(17,19));
-				if( strTime != "" )
-				{
-					waypoint.time = new Date();
-					waypoint.time.setUTCFullYear(year, month, day);
-					waypoint.time.setUTCHours(hours, minutes, seconds);
-					
-				}
-				*/
+				
 				waypoint.magneticVariation = xml.magvar;
 				waypoint.geoIdHeight = xml.geoidheight;
 				waypoint.name = xml.name;
