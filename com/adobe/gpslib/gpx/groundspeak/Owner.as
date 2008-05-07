@@ -1,0 +1,13 @@
+package com.adobe.gpslib.gpx.groundspeak
+{
+	public class Owner
+	{
+		public var id:String;
+		public var name:String;
+		
+		public function Owner()
+		{
+		}
+
+	}
+}
