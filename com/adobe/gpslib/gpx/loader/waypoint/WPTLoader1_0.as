@@ -18,7 +18,6 @@ package com.adobe.gpslib.gpx.loader.waypoint
 			var waypoint : Waypoint = new Waypoint(lat, lon);
 			waypoint.elevation = xml.ele;
 			var strTime : String = xml.time;
-			//waypoint.time = xml.time == "" ? null : DateUtil.parseW3CDTF(strTime+"00:00");
 			var year : Number = Number(strTime.substring(0,4));
 				var month : Number = Number(strTime.substring(5,7));
 				var day : Number = Number(strTime.substring(8,10));
