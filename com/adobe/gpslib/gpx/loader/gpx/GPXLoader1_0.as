@@ -14,7 +14,7 @@ package com.adobe.gpslib.gpx.loader.gpx
 			var gpx:GPX = new GPX();
 			namespace gpxNS = "http://www.topografix.com/GPX/1/0";
 			use namespace gpxNS;
-			var xmlList : XMLList = xml.children();
+			
 			gpx.name = xml.name;
 			gpx.description = xml.desc;
 			gpx.author = xml.author;
@@ -50,23 +50,7 @@ package com.adobe.gpslib.gpx.loader.gpx
 					gpx.arrWaypoints.push(wpt);
 				}
 			}
-			
-			/*for( var i:Number = 0; i < xmlList.length(); i++ )
-			{
-				var ln:String = xmlList[i].name();
-				var obj:XMLList = xml.wpt;
-				trace(obj.length());
-				if( ln == 'http://www.topografix.com/GPX/1/0::wpt' ) {
-					var wpt : Waypoint = WPTLoaderFactory.load(xmlList["wpt"]);
-					gpx.arrWaypoints.push(wpt);
-				} else if( ln == 'http://www.topografix.com/GPX/1/0::trk' ) {
-					//var trk : Track = Track.createTrackFromXML(xmlList[i]);
-					//gpx.arrTracks.push(trk);
-				} else if( ln == 'http://www.topografix.com/GPX/1/0::rte') {
-					//var rte : Route = Route.createRouteFromXML(xmlList[i]);
-					//gpx.arrRoutes.push(rte);
-				}
-			}*/
+			//TODO: Need to write parsers for Track and Route
 			
 			return gpx;
 				

@@ -1,6 +1,7 @@
 package com.adobe.gpslib.gpx
 {
 	import com.adobe.gpslib.GPX;
+	import com.adobe.gpslib.gpx.groundspeak.Cache;
 	import com.adobe.gpslib.gpx.waypoint.GpsFix;
 	import com.adobe.utils.DateUtil;
 	
@@ -30,7 +31,7 @@ package com.adobe.gpslib.gpx
 		private var _pdop : Number; // Position dilution of precision.
 		private var _ageOfGpsData : Number; //should be time
 		private var _dgpsid : Number; // DGPS station ID
-
+		private var _cache:Cache; //information on geocache
 		/**
 		 * 
 		 * 
@@ -135,6 +136,9 @@ package com.adobe.gpslib.gpx
 		public function set dgpsid (value:Number) : void { _dgpsid = value; }
 		public function get dgpsid () : Number { return _dgpsid; }
 		
+		/* geocache information */
+		public function set cache (value:Cache) : void { _cache = value; }
+		public function get cache () : Cache { return _cache; }
 		
 		/**
 		 * createWaypointFroXML takes an XML variable and createsa Waypoint Object
