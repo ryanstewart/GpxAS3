@@ -45,7 +45,6 @@ package com.adobe.gpslib.gpx.loader.gpx
 			for( var i:Number = 0; i < xmlList.length(); i++ )
 			{
 				var ln:String = xmlList[i].name();
-				trace(ln);
 				if( ln == 'http://www.topografix.com/GPX/1/0::wpt' ) {
 					var wpt : Waypoint = WPTLoaderFactory.load(xmlList[i]);
 					gpx.arrWaypoints.push(wpt);

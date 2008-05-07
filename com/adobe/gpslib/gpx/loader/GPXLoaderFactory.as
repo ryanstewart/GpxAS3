@@ -12,11 +12,9 @@ package com.adobe.gpslib.gpx.loader
 				var name:String = gpx_xml.name();
 				if( name == 'http://www.topografix.com/GPX/1/1::gpx' )
 				{
-					trace('load gpx 1.1');
 					return GPXLoader1_1.load(gpx_xml);
 				}else if ( name == 'http://www.topografix.com/GPX/1/0::gpx' )
 				{
-					trace('load gpx 1.0');
 					return GPXLoader1_0.load(gpx_xml);
 				}else
 				{
