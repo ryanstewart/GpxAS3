@@ -35,6 +35,27 @@ package com.adobe.gpslib.gpx.loader.track
 			track.number = xml.number;
 			track.type = xml.type;
 			return track;
+		}
+		
+		public static function toXMLString(trk:Track) : XML
+		{
+			var xml : XML = <trk></trk>;
+			xml.addNamespace("http://www.topografix.com/GPX/1/1");
+			if ( trk.name ) { xml.name = trk.name; }
+			if ( trk.comment ) { xml.cmt = trk.comment; }
+			if ( trk.description ) { xml.desc = trk.description; }
+			if ( trk.source ) { xml.src = trk.source; }
+			if ( trk.link ) { xml.link.@href = trk.link; }
+			if ( trk.linkText ) { xml.link.text = trk.linkText; }
+			if ( trk.linkType ) { xml.link.type = trk.linkType; }
+			xml.trkseg = <trkseg></trkseg>;
+			for ( var i : Number = 0; i < trk.trackSegment.length-1; i++ )
+			{
+				var trkpt : Waypoint = trk.trackSegment[i] as Waypoint;				
+				xml.trkseg.appendChild(WPTLoader1_1.toXMLString(trkpt,"trkpt"));
+			}
+			return xml;
+			
 		}	
 	}
 }
