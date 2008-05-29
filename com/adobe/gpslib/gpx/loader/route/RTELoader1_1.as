@@ -37,6 +37,26 @@ package com.adobe.gpslib.gpx.loader.route
 			route.type = xml.type;
 			return route;
 		}
+		
+		public static function toXMLString(rte:Route) : XML
+		{
+			var xml : XML = <rte></rte>;
+			xml.addNamespace("http://www.topografix.com/GPX/1/1");
+			if ( rte.name ) { xml.name = rte.name; }
+			if ( rte.comment ) { xml.cmt = rte.comment; }
+			if ( rte.description ) { xml.desc = rte.description; }
+			if ( rte.source ) { xml.src = rte.source; }
+			if ( rte.link ) { xml.link.@href = rte.link; }
+			if ( rte.linkText ) { xml.link.text = rte.linkText; }
+			if ( rte.linkType ) { xml.link.type = rte.linkType; }
+			for ( var i : Number = 0; i < rte.routePoint.length-1; i++ )
+			{
+				var rtept : Waypoint = rte.routePoint[i] as Waypoint;				
+				xml.appendChild(WPTLoader1_1.toXMLString(rtept,"rtept"));
+			}
+			return xml;
+			
+		}
 
 	}
 }
