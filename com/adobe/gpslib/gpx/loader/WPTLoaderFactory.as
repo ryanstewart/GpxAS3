@@ -26,6 +26,18 @@ package com.adobe.gpslib.gpx.loader
 						return null;
 				}
 				
+		}
+		
+		public static function toXMLString(wpt:Waypoint,type:String,ver:Number=1.1) : XML
+		{
+			switch ( ver )
+			{
+				case 1.1:
+					return WPTLoader1_1.toXMLString(wpt, type);
+					break;
+				default:
+					return null;
 			}
+		}
 	}
 }
