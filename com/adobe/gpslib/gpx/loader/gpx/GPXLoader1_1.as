@@ -4,6 +4,7 @@ package com.adobe.gpslib.gpx.loader.gpx
 	import com.adobe.gpslib.gpx.Route;
 	import com.adobe.gpslib.gpx.Track;
 	import com.adobe.gpslib.gpx.Waypoint;
+	import com.adobe.gpslib.gpx.events.ParseEvent;
 	import com.adobe.gpslib.gpx.loader.RTELoaderFactory;
 	import com.adobe.gpslib.gpx.loader.TRKLoaderFactory;
 	import com.adobe.gpslib.gpx.loader.WPTLoaderFactory;
@@ -12,13 +13,15 @@ package com.adobe.gpslib.gpx.loader.gpx
 	import com.adobe.gpslib.gpx.loader.waypoint.WPTLoader1_1;
 	import com.adobe.utils.DateUtil;
 	
-	public class GPXLoader1_1
+	import flash.events.EventDispatcher;
+	
+	public class GPXLoader1_1 extends EventDispatcher
 	{
 		public function GPXLoader1_1()
 		{
 		}
 
-		public static function load(xml:XML):GPX
+		public function load(xml:XML) : void
 		{
 			var gpx:GPX = new GPX();
 			namespace gpxNS = "http://www.topografix.com/GPX/1/1";
@@ -52,7 +55,9 @@ package com.adobe.gpslib.gpx.loader.gpx
 				}
 			}
 			
-			return gpx;
+			var e : ParseEvent = new ParseEvent(ParseEvent.PARSE_COMPLETE, gpx);
+			dispatchEvent(e);			
+			//return gpx;
 				
 		}
 		
