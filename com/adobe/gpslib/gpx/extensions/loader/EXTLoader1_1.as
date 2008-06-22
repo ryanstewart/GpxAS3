@@ -1,8 +1,8 @@
 package com.adobe.gpslib.gpx.extensions.loader
 {
 	import com.adobe.gpslib.gpx.extensions.Extensions;
-	import com.adobe.gpslib.gpx.extensions.twitter.TwitterLoader1_1;
-	import com.adobe.gpslib.gpx.extensions.twitter.TwitterPoint;
+	import com.adobe.gpslib.gpx.extensions.status.StatusLoader1_1;
+	import com.adobe.gpslib.gpx.extensions.status.StatusPoint;
 	
 	public class EXTLoader1_1
 	{
@@ -25,7 +25,7 @@ package com.adobe.gpslib.gpx.extensions.loader
 				switch( ext.getItemAt(i).thisNamespace )
 				{
 					case "http://www.digitalbackcountry.com/TwitterPoint/1/0":
-						xml.appendChild(TwitterLoader1_1.toXMLString(ext.getItemAt(i) as TwitterPoint));
+						xml.appendChild(StatusLoader1_1.toXMLString(ext.getItemAt(i) as StatusPoint));
 						break;
 				}
 			}
