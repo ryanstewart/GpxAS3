@@ -65,27 +65,6 @@ package com.adobe.gpslib.gpx
 		public function set trackSegment(value:Array) : void { this._trackSegment = value; }
 		public function get trackSegment() : Array { return this._trackSegment; }
 		
-		public function createXmlTrack() : XML
-		{
-			var trk : XML = <trk></trk>;
-			trk.addNamespace("http://www.topografix.com/GPX/1/1");
-			if ( this.name ) { trk.name = this.name; }
-			if ( this.comment ) { trk.cmt = this.comment; }
-			if ( this.description ) { trk.desc = this.description; }
-			if ( this.source ) { trk.src = this.source; }
-			if ( this.link ) { trk.link.@href = this.link; }
-			if ( this.linkText ) { trk.link.text = this.linkText; }
-			if ( this.linkType ) { trk.link.type = this.linkType; }
-			trk.trkseg = <trkseg></trkseg>;
-			for ( var i : Number = 0; i < this.trackSegment.length-1; i++ )
-			{
-				var trkpt : Waypoint = this.trackSegment[i] as Waypoint;				
-				trk.trkseg.appendChild(trkpt.createXMLWaypoint("trkpt"));
-			}
-			return trk;
-			
-		}
-		
 		public function appendTrackSegment( trk : Track ) : void
 		{
 			

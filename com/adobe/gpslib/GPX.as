@@ -1,12 +1,12 @@
 package com.adobe.gpslib
 {
-	import com.adobe.gpslib.gpx.Route;
-	import com.adobe.gpslib.gpx.Track;
-	import com.adobe.gpslib.gpx.Waypoint;
+	import com.adobe.gpslib.gpx.events.ParseEvent;
 	import com.adobe.gpslib.gpx.loader.GPXLoaderFactory;
+	
+	import flash.events.EventDispatcher;
 
 	[Bindable]
-	public class GPX
+	public class GPX extends EventDispatcher
 	{		
 		private var _creator : String;
 		private var _version : String;
@@ -33,57 +33,28 @@ package com.adobe.gpslib
 			
 		}
 		
-		public static function load(gpx_xml:XML):GPX
+		public function load(gpx_xml:XML) : void
 		{
-			return GPXLoaderFactory.loadGPX(gpx_xml);
+			var gpxLoader : GPXLoaderFactory = new GPXLoaderFactory();
+			gpxLoader.addEventListener(ParseEvent.PARSE_COMPLETE, onLoad);
+			gpxLoader.loadGPX(gpx_xml);
+			//GPXLoaderFactory.loadGPX(gpx_xml);
 		}
 		
+		public function onLoad (event:ParseEvent) : void
+		{
+			dispatchEvent(event);
+		}
 		//Depricated
-		public function newGpxFromXml(xml:XML) : GPX
+		public function newGpxFromXml(xml:XML) : void
 		{
-			return GPX.load(xml);
+			//return GPX.load(xml);
 		
 		}
-		public function createXmlGpx() : XML
+		
+		public static function toXMLString(gpx:GPX) : XML
 		{
-			var gpx : XML = <gpx></gpx>;
-			
-			gpx.addNamespace("http://www.topografix.com/GPX/1/1");
-			gpx.@creator = this.creator;
-			gpx.@version = this.version;
-			if ( this.name ) { gpx.metadata.name = this.name; }
-			if ( this.description ) {gpx.metadata.desc = this.description; }
-			if ( this.author ) { gpx.metadata.author = this.author; }
-			if ( this.email ) { gpx.metadata.email = this.email; }
-			if ( this.link ) { gpx.metadata.link.@href = this.link; }
-			if ( this.linkText ) { gpx.metadata.link.text = this.linkText; }
-			if ( this.linkType ) { gpx.metadata.link.type = this.linkType; }
-			if ( this.time ) { gpx.metadata.time = this.time.fullYearUTC; }
-			if ( this.keywords ) { gpx.metadata.keywords = this.keywords; }
-			
-			if ( this.minLatitude || this.minLongitude || this.maxLatitude || this.maxLongitude ) { 
-				gpx.metadata.bounds.@minlat;
-				gpx.metadata.bounds.@minlon;
-				gpx.metadata.bounds.@maxlat;
-				gpx.metadata.bounds.@maxlon;
-			}
-			
-			for ( var k : Number = 0; k < this.arrWaypoints.length-1; k++ )
-			{
-				var wpt : Waypoint = this.arrWaypoints[k] as Waypoint;
-				gpx.appendChild(wpt.createXMLWaypoint());
-			}
-			for ( var i : Number = 0; i < this.arrTracks.length-1; i++ )
-			{
-				var trk : Track = this.arrTracks[i] as Track;				
-				gpx.appendChild(trk.createXmlTrack());
-			}
-			for ( var j : Number = 0; j < this.arrRoutes.length-1; j++ )
-			{			
-				var rte : Route = this.arrRoutes[j] as Route;
-				gpx.appendChild(rte.createXmlRoute());
-			}
-			return gpx;
+			return GPXLoaderFactory.toXMLString(gpx);
 		}
 		
 		/******

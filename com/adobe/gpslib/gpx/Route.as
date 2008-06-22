@@ -135,35 +135,8 @@ package com.adobe.gpslib.gpx
 		{
 			this._routePoint = value;
 		}
-		
-		public function get routePoint () : Array
-		{
-			return this._routePoint;
-		}
 
-		/*****
-		 * Helper Functions
-		 *****/
-		
-		public function createXmlRoute() : XML
-		{
-			var rte : XML = <rte></rte>;
-			rte.addNamespace("http://www.topografix.com/GPX/1/1");
-			if ( this.name ) { rte.name = this.name; }
-			if ( this.comment ) { rte.cmt = this.comment; }
-			if ( this.description ) { rte.desc = this.description; }
-			if ( this.source ) { rte.src = this.source; }
-			if ( this.link ) { rte.link.@href = this.link; }
-			if ( this.linkText ) { rte.link.text = this.linkText; }
-			if ( this.linkType ) { rte.link.type = this.linkType; }
-			for ( var i : Number = 0; i < this.routePoint.length-1; i++ )
-			{
-				var rtept : Waypoint = this.routePoint[i] as Waypoint;				
-				rte.appendChild(rtept.createXMLWaypoint("rtept"));
-			}
-			return rte;
-			
-		}
+		public function get routePoint () : Array { return this._routePoint; }
 
 	}
 }
