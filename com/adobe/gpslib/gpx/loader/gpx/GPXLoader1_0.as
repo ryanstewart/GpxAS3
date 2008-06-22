@@ -2,14 +2,18 @@ package com.adobe.gpslib.gpx.loader.gpx
 {
 	import com.adobe.gpslib.GPX;
 	import com.adobe.gpslib.gpx.Waypoint;
+	import com.adobe.gpslib.gpx.events.ParseEvent;
 	import com.adobe.gpslib.gpx.loader.WPTLoaderFactory;
 	
-	public class GPXLoader1_0
+	import flash.events.EventDispatcher;
+	
+	public class GPXLoader1_0 extends EventDispatcher
 	{
 		public function GPXLoader1_0()
 		{
 		}
-		public static function load(xml:XML):GPX
+		
+		public function load(xml:XML) : void
 		{
 			var gpx:GPX = new GPX();
 			namespace gpxNS = "http://www.topografix.com/GPX/1/0";
@@ -51,8 +55,9 @@ package com.adobe.gpslib.gpx.loader.gpx
 				}
 			}
 			//TODO: Need to write parsers for Track and Route
-			
-			return gpx;
+			var e : ParseEvent = new ParseEvent(ParseEvent.PARSE_COMPLETE, gpx);
+			dispatchEvent(e);
+			//return gpx;
 				
 		}
 	}
