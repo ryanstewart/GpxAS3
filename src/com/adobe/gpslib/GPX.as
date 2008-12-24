@@ -41,15 +41,16 @@ package com.adobe.gpslib
 			//GPXLoaderFactory.loadGPX(gpx_xml);
 		}
 		
-		public function onLoad (event:ParseEvent) : void
+		public  function onLoad (event:ParseEvent) : void
 		{
 			dispatchEvent(event);
 		}
-		//Depricated
-		public function newGpxFromXml(xml:XML) : void
-		{
-			//return GPX.load(xml);
 		
+		public static function newGpxFromXml(xml:XML) : GPX
+		{
+			var g:GPX = new GPX();
+			g.load(xml);
+			return g;
 		}
 		
 		public static function toXMLString(gpx:GPX) : XML
