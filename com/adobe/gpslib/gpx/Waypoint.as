@@ -33,7 +33,7 @@ package com.adobe.gpslib.gpx
 		private var _ageOfGpsData : Number; //should be time
 		private var _dgpsid : Number; // DGPS station ID
 		private var _cache:Cache; //information on geocache
-		private var _extensions : Extensions = new Extensions();
+		// - stripping out until later - private var _extensions : Extensions = new Extensions();
 		
 		/**
 		 * 
@@ -144,8 +144,8 @@ package com.adobe.gpslib.gpx
 		public function get cache () : Cache { return _cache; }
 		
 		/* extensions */
-		public function set extensions (value:Extensions) : void { _extensions = value; }
-		public function get extensions () : Extensions { return _extensions; }
+		//public function set extensions (value:Extensions) : void { _extensions = value; }
+		//public function get extensions () : Extensions { return _extensions; }
 		
 		public static function load (xml:XML) : Waypoint
 		{

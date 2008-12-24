@@ -16,7 +16,7 @@ package com.adobe.gpslib.gpx.extensions
 		{
 			super();
 		}
-		
+		/*
 		public function getExtensionsByType(value:String) : ArrayCollection
 		{
 			// Figure out a way to make this more dynamic.
@@ -35,11 +35,11 @@ package com.adobe.gpslib.gpx.extensions
 					}
 					break;
 				case STATUS_POINT:
-					for( var i : uint; i < len; i++ )
+					for( var j : uint; j < len; j++ )
 					{
-						if( this[i] is StatusPoint )
+						if( this[j] is StatusPoint )
 						{
-							ac.addItem(this[i]);
+							ac.addItem(this[j]);
 						}
 					}				
 					break;		
@@ -47,7 +47,7 @@ package com.adobe.gpslib.gpx.extensions
 			
 			return ac;
 		}
-		
+		*/
 		//public function set arrExtensions(value:Array) : void { _arrExtensions = value; }
 		//public function get arrExtensions() : Array { return _arrExtensions; }
 
