@@ -135,64 +135,8 @@ package com.adobe.gpslib.gpx
 		{
 			this._routePoint = value;
 		}
-		
-		public function get routePoint () : Array
-		{
-			return this._routePoint;
-		}
 
-		/*****
-		 * Helper Functions
-		 *****/
-
-		public static function createRouteFromXML( xml:XML ) : Route
-		{
-			namespace gpxNS = "http://www.topografix.com/GPX/1/1";
-			use namespace gpxNS;
-			
-			if( xml.name() == 'http://www.topografix.com/GPX/1/1::rte' )
-			{
-				var name : String = xml.name;
-				var routePoint : Array = getRoutePoints(xml.children());
-				return new Route(name, routePoint);
-			} else {
-				return null;
-			}
-		}
-		
-		public static function getRoutePoints( xmlList:XMLList ) : Array
-		{
-			var routePoint : Array = new Array();
-			for( var i:Number = 0; i < xmlList.length(); i++ )
-			{
-				if( xmlList[i].name() == 'http://www.topografix.com/GPX/1/1::rtept' ) {
-					var wpt : Waypoint = Waypoint.createWaypointFromXML(xmlList[i]);
-					routePoint.push(wpt);
-				}
-			}
-			
-			return routePoint;				
-		}
-		
-		public function createXmlRoute() : XML
-		{
-			var rte : XML = <rte></rte>;
-			rte.addNamespace("http://www.topografix.com/GPX/1/1");
-			if ( this.name ) { rte.name = this.name; }
-			if ( this.comment ) { rte.cmt = this.comment; }
-			if ( this.description ) { rte.desc = this.description; }
-			if ( this.source ) { rte.src = this.source; }
-			if ( this.link ) { rte.link.@href = this.link; }
-			if ( this.linkText ) { rte.link.text = this.linkText; }
-			if ( this.linkType ) { rte.link.type = this.linkType; }
-			for ( var i : Number = 0; i < this.routePoint.length-1; i++ )
-			{
-				var rtept : Waypoint = this.routePoint[i] as Waypoint;				
-				rte.appendChild(rtept.createXMLWaypoint("rtept"));
-			}
-			return rte;
-			
-		}
+		public function get routePoint () : Array { return this._routePoint; }
 
 	}
 }

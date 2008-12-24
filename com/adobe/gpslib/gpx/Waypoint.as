@@ -1,8 +1,10 @@
 package com.adobe.gpslib.gpx
 {
 	import com.adobe.gpslib.GPX;
+	import com.adobe.gpslib.gpx.extensions.Extensions;
+	import com.adobe.gpslib.gpx.groundspeak.Cache;
+	import com.adobe.gpslib.gpx.loader.WPTLoaderFactory;
 	import com.adobe.gpslib.gpx.waypoint.GpsFix;
-	import com.adobe.utils.DateUtil;
 	
 	[Bindable]
 	public class Waypoint
@@ -30,7 +32,9 @@ package com.adobe.gpslib.gpx
 		private var _pdop : Number; // Position dilution of precision.
 		private var _ageOfGpsData : Number; //should be time
 		private var _dgpsid : Number; // DGPS station ID
-
+		private var _cache:Cache; //information on geocache
+		// - stripping out until later - private var _extensions : Extensions = new Extensions();
+		
 		/**
 		 * 
 		 * 
@@ -135,107 +139,22 @@ package com.adobe.gpslib.gpx
 		public function set dgpsid (value:Number) : void { _dgpsid = value; }
 		public function get dgpsid () : Number { return _dgpsid; }
 		
+		/* geocache information */
+		public function set cache (value:Cache) : void { _cache = value; }
+		public function get cache () : Cache { return _cache; }
 		
-		/**
-		 * createWaypointFroXML takes an XML variable and createsa Waypoint Object
-		 * 
-		 **/
-	
-		public static function createWaypointFromXML(xml:XML) : Waypoint
+		/* extensions */
+		//public function set extensions (value:Extensions) : void { _extensions = value; }
+		//public function get extensions () : Extensions { return _extensions; }
+		
+		public static function load (xml:XML) : Waypoint
 		{
-			namespace gpxNS = "http://www.topografix.com/GPX/1/1";
-			use namespace gpxNS;
-			
-			if (xml.name() == "http://www.topografix.com/GPX/1/1::wpt" || xml.name() == 'http://www.topografix.com/GPX/1/1::trkpt' || xml.name() == 'http://www.topografix.com/GPX/1/1::rtept')
-			{
-				var lat : Number = xml.@lat;
-				var lon : Number = xml.@lon;
-				var waypoint : Waypoint = new Waypoint(lat, lon);
-				waypoint.elevation = xml.ele;
-				var strTime : String = xml.time;
-				if( strTime != "" ) { waypoint.time = DateUtil.parseW3CDTF(strTime); }
-				/*
-				var year : Number = Number(strTime.substring(0,4));
-				var month : Number = Number(strTime.substring(5,7));
-				var day : Number = Number(strTime.substring(8,10));
-				var hours : Number = Number(strTime.substring(11,13));
-				var minutes : Number = Number(strTime.substring(14,16));
-				var seconds : Number = Number(strTime.substring(17,19));
-				if( strTime != "" )
-				{
-					waypoint.time = new Date();
-					waypoint.time.setUTCFullYear(year, month, day);
-					waypoint.time.setUTCHours(hours, minutes, seconds);
-					
-				}
-				*/
-				waypoint.magneticVariation = xml.magvar;
-				waypoint.geoIdHeight = xml.geoidheight;
-				waypoint.name = xml.name;
-				waypoint.comment = xml.cmt;
-				waypoint.description = xml.desc;
-				waypoint.link = xml.link;
-				waypoint.linkText = xml.link.text;
-				waypoint.linkType = xml.link.type;
-				waypoint.symbol = xml.sym;
-				waypoint.type = xml.type;
-				waypoint.fix = xml.fix as GpsFix;
-				waypoint.satelliteNum = xml.sat;
-				waypoint.hdop = xml.hdop;
-				waypoint.vdop = xml.vdop;
-				waypoint.pdop = xml.pdop;
-				waypoint.ageOfGpsData = xml.ageofgpsdata;
-				waypoint.dgpsid = xml.dgpsid;
-				return waypoint;
-			} else {
-				return null;
-			}
+			return WPTLoaderFactory.load(xml);
 		}
-
-		/**
-		 * createXMLWaypoint
-		 * 
-		 **/
-		 
-		public function createXMLWaypoint(type:String = "wpt") : XML
+		
+		public static function toXMLString(wpt:Waypoint) : XML
 		{
-			var pt:XML;
-			switch(type) {
-				case "trkpt":
-					pt = <trkpt></trkpt>;
-					break;
-				case "rtept":
-					pt = <rtept></rtept>;
-					break;
-				default:
-					pt = <wpt></wpt>;
-			}
-			
-			
-			pt.addNamespace("http://www.topografix.com/GPX/1/1");
-			pt.@lat = this.latitude;
-			pt.@lon = this.longitude;
-			if ( this.elevation ) { pt.ele = this.elevation; }
-			if ( this.time ) { pt.time = this.time; }
-			if ( this.magneticVariation ) { pt.magvar = this.magneticVariation; }
-			if ( this.geoIdHeight ) { pt.geoidheight = this.geoIdHeight; }
-			if ( this.name ) { pt.name = this.name; }
-			if ( this.comment ) { pt.cmt = this.comment; }
-			if ( this.description ) { pt.desc = this.description; }
-			if ( this.source ) { pt.src = this.source; }
-			if ( this.link ) { pt.link = this.link; }
-			if ( this.linkText ) { pt.link.text = this.linkText; }
-			if ( this.linkType ) { pt.link.type = this.linkType; }
-			if ( this.symbol ) { pt.sym = this.symbol; }
-			if ( this.type ) { pt.type  = this.type; }
-			if ( this.fix ) { pt.fix = this.fix; }
-			if ( this.satelliteNum ) { pt.sat = this.satelliteNum; }
-			if ( this.hdop ) { pt.hdop = this.hdop; }
-			if ( this.vdop ) { pt.vdop = this.vdop; }
-			if ( this.pdop ) { pt.pdop = this.pdop; }
-			if ( this.ageOfGpsData ) { pt.ageofgpsdata = this.ageOfGpsData; }
-			if ( this.dgpsid ) { pt.dgpsid = this.dgpsid; }
-			return pt;
+			return WPTLoaderFactory.toXMLString(wpt,"wpt");
 		}
 		
 		public static function getWaypoints(xmlList:XMLList) : Array
@@ -247,7 +166,7 @@ package com.adobe.gpslib.gpx
 			for( var i:Number = 0; i < xmlList.length(); i++ )
 			{
 				if( xmlList[i].name() == 'http://www.topografix.com/GPX/1/1::wpt' ) {
-					var wpt : Waypoint = createWaypointFromXML(xmlList[i]);
+					var wpt : Waypoint =  Waypoint.load(xmlList[i]);
 					arrTempWaypoints.push(wpt);
 				}
 			}
