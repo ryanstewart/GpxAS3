@@ -1,1 +1,3 @@
 This project requires the as3corelib - http://code.google.com/p/as3corelib/
+
+Check this project out from svn.  To build it the libs directory will need to be added as a swc folder.
