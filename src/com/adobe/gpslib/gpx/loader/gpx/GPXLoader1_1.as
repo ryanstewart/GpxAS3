@@ -21,7 +21,7 @@ package com.adobe.gpslib.gpx.loader.gpx
 		{
 		}
 
-		public function load(xml:XML) : void
+		public function load(xml:XML) : GPX
 		{
 			var gpx:GPX = new GPX();
 			namespace gpxNS = "http://www.topografix.com/GPX/1/1";
@@ -54,10 +54,8 @@ package com.adobe.gpslib.gpx.loader.gpx
 					gpx.arrRoutes.push(rte);
 				}
 			}
-			
-			var e : ParseEvent = new ParseEvent(ParseEvent.PARSE_COMPLETE, gpx);
-			dispatchEvent(e);			
-			//return gpx;
+						
+			return gpx;
 				
 		}
 		

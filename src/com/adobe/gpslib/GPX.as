@@ -6,7 +6,7 @@ package com.adobe.gpslib
 	import flash.events.EventDispatcher;
 
 	[Bindable]
-	public class GPX extends EventDispatcher
+	public class GPX
 	{		
 		private var _creator : String;
 		private var _version : String;
@@ -33,24 +33,18 @@ package com.adobe.gpslib
 			
 		}
 		
-		public function load(gpx_xml:XML) : void
+		public static function load(gpx_xml:XML) : GPX
 		{
 			var gpxLoader : GPXLoaderFactory = new GPXLoaderFactory();
-			gpxLoader.addEventListener(ParseEvent.PARSE_COMPLETE, onLoad);
-			gpxLoader.loadGPX(gpx_xml);
-			//GPXLoaderFactory.loadGPX(gpx_xml);
+			return gpxLoader.loadGPX(gpx_xml);
 		}
 		
-		public  function onLoad (event:ParseEvent) : void
-		{
-			dispatchEvent(event);
-		}
 		
+		//Depricated
 		public static function newGpxFromXml(xml:XML) : GPX
 		{
-			var g:GPX = new GPX();
-			g.load(xml);
-			return g;
+			
+			return load(xml);
 		}
 		
 		public static function toXMLString(gpx:GPX) : XML

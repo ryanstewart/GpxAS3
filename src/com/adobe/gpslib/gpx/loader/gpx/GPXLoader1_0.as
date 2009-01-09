@@ -13,7 +13,7 @@ package com.adobe.gpslib.gpx.loader.gpx
 		{
 		}
 		
-		public function load(xml:XML) : void
+		public function load(xml:XML) : GPX
 		{
 			var gpx:GPX = new GPX();
 			namespace gpxNS = "http://www.topografix.com/GPX/1/0";
@@ -55,9 +55,8 @@ package com.adobe.gpslib.gpx.loader.gpx
 				}
 			}
 			//TODO: Need to write parsers for Track and Route
-			var e : ParseEvent = new ParseEvent(ParseEvent.PARSE_COMPLETE, gpx);
-			dispatchEvent(e);
-			//return gpx;
+			
+			return gpx;
 				
 		}
 	}
