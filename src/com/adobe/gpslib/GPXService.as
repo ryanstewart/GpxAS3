@@ -5,6 +5,7 @@ package com.adobe.gpslib
 	
 	import flash.events.EventDispatcher;
 	
+	[Event(name="parseComplete", type="com.adobe.gpslib.gpx.events.ParseEvent")]
 	public class GPXService extends EventDispatcher
 	{
 		public function GPXService()
