@@ -9,15 +9,41 @@ package com.adobe.gpslib.gpx
 		private static const MI : Number = 1.15077945;
 		private static const KM : Number = 1.85200;
 		
+		private static const EARTH_RADIUS_MILES:Number = 3961.3;
+		private static const EARTH_RADIUS_KM:Number = 6378.1;
+		
 		public static function getDistanceBetweenWaypoints(wpt1:Waypoint, wpt2:Waypoint, unit:String="mi") : Number
 		{
+			/***
+			 *  Haversine Formula (from R.W. Sinnott, "Virtues of the Haversine", Sky and Telescope, vol. 68, no. 2, 1984, p. 159):
+
+				dlon = lon2 - lon1
+				dlat = lat2 - lat1
+				a = (sin(dlat/2))^2 + cos(lat1) * cos(lat2) * (sin(dlon/2))^2
+				c = 2 * atan2( sqrt(a), sqrt(1-a) )
+				d = R * c (where R is the radius of the Earth)
+				
+				Formula from: http://andrew.hedges.name/experiments/haversine/ 
+			*/ 
+
 			var adjustment : Number = 0;
-			if( unit == "mi" ) { adjustment = MI; }
-			if( unit == "km" ) { adjustment = KM; }
-			// Distance=ACOS(SIN(lat1/180*PI)*SIN(lat2/180*PI)+ COS(lat1/180*PI)*COS(lat2/180*PI)*COS(lon1/180*PI-lon2/180*PI))*180*60/PI)
-			var distance : Number;
-			distance = Math.acos(Math.sin(wpt1.latitude/180*Math.PI)*Math.sin(wpt2.latitude/180*Math.PI)+Math.cos(wpt1.latitude/180*Math.PI)*Math.cos(wpt2.latitude/180*Math.PI)*Math.cos(wpt1.longitude/180*Math.PI-wpt2.longitude/180*Math.PI))*180*60/Math.PI;
-			return distance * adjustment;
+			var R:Number;
+			var distance:Number;
+			var a:Number;
+			var c:Number;
+			
+			if( unit == "mi" ) { R = EARTH_RADIUS_MILES; }
+			if( unit == "km" ) { R = EARTH_RADIUS_KM; }
+		
+			var dlon:Number = wpt2.longitude - wpt1.longitude;
+			var dlat:Number = wpt2.latitude - wpt1.latitude;
+			
+			// Begin Haversine Forumla
+			a = (Math.sin(dlat/2))^2 + Math.cos(wpt2.latitude) * Math.cos(wpt2.latitude) * (Math.sin(dlon/2))^2;
+			c = 2 * Math.atan2( Math.sqrt(a), Math.sqrt(1-a) );
+			distance = R * c;
+			
+			return distance;
 		}
 		
 		public static function getTrackDistance( track:Track ) : Number
