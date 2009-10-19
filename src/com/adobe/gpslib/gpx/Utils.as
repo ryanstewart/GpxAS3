@@ -2,7 +2,7 @@ package com.adobe.gpslib.gpx
 {
 	import com.adobe.gpslib.gpx.extensions.Extensions;
 	import com.adobe.gpslib.gpx.extensions.speed.SpeedPoint;
-	
+		
 	public class Utils
 	{
 		private static const TIME_NUMBER : Number = 0.000000277777778;
@@ -35,12 +35,12 @@ package com.adobe.gpslib.gpx
 			if( unit == "mi" ) { R = EARTH_RADIUS_MILES; }
 			if( unit == "km" ) { R = EARTH_RADIUS_KM; }
 		
-			var dlon:Number = wpt2.longitude - wpt1.longitude;
-			var dlat:Number = wpt2.latitude - wpt1.latitude;
+			var dlon:Number = degreesToRadians(wpt2.longitude) - degreesToRadians(wpt1.longitude);
+			var dlat:Number = degreesToRadians(wpt2.latitude) - degreesToRadians(wpt1.latitude);
 			
 			// Begin Haversine Forumla
-			a = (Math.sin(dlat/2))^2 + Math.cos(wpt2.latitude) * Math.cos(wpt2.latitude) * (Math.sin(dlon/2))^2;
-			c = 2 * Math.atan2( Math.sqrt(a), Math.sqrt(1-a) );
+			a = Math.pow(Math.sin(dlat/2),2) + (Math.cos(wpt1.latitude) * Math.cos(wpt2.latitude) * Math.pow(Math.sin(dlon/2),2));
+			c = 2* Math.atan2( Math.sqrt(Math.abs(a)),Math.sqrt(Math.abs(1-a)) );
 			distance = R * c;
 			
 			return distance;
@@ -104,6 +104,12 @@ package com.adobe.gpslib.gpx
 				}
 			}
 			return trk;
+		}
+		
+		private static function degreesToRadians(value:Number):Number
+		{
+			var radians:Number = value * Math.PI/180;
+			return radians;
 		}
 
 	}
