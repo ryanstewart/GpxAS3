@@ -4,7 +4,6 @@ package com.adobe.gpslib.gpx.loader.gpx
 	import com.adobe.gpslib.gpx.Route;
 	import com.adobe.gpslib.gpx.Track;
 	import com.adobe.gpslib.gpx.Waypoint;
-	import com.adobe.gpslib.gpx.events.ParseEvent;
 	import com.adobe.gpslib.gpx.loader.RTELoaderFactory;
 	import com.adobe.gpslib.gpx.loader.TRKLoaderFactory;
 	import com.adobe.gpslib.gpx.loader.WPTLoaderFactory;

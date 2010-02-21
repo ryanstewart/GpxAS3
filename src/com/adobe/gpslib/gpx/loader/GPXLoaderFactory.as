@@ -1,7 +1,6 @@
 package com.adobe.gpslib.gpx.loader
 {
 	import com.adobe.gpslib.GPX;
-	import com.adobe.gpslib.gpx.events.ParseEvent;
 	import com.adobe.gpslib.gpx.loader.gpx.GPXLoader1_0;
 	import com.adobe.gpslib.gpx.loader.gpx.GPXLoader1_1;
 	

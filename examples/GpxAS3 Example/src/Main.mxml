@@ -135,7 +135,7 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<maps:Map id="map" url="http://blog.digitalbackcountry.com" 
-			  key="ABQIAAAAEPSnxMQDa8BRcDfJB7EW1hTWCdQ-AJckUnuSppzI_Y_GSzvx2xRP-k43cI98_ddac2yNC8iG9QhgOQ" 
+	<maps:Map id="map" url="YOUR URL HERE" 
+			  key="YOUR API KEY HERE" 
 			  width="100%" height="100%" mapevent_mapready="map_mapevent_mapreadyHandler(event)" />
 </s:WindowedApplication>

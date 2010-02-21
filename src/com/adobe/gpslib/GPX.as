@@ -65,13 +65,6 @@ package com.adobe.gpslib
 			return gpxLoader.loadGPX(gpx_xml);
 		}
 		
-		
-		//Depricated
-		public static function newGpxFromXml(xml:XML) : GPX
-		{
-			return load(xml);
-		}
-		
 		public static function toXMLString(gpx:GPX) : XML
 		{
 			return GPXLoaderFactory.toXMLString(gpx);
