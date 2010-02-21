@@ -1,7 +1,6 @@
 package com.adobe.gpslib.gpx.loader.waypoint
 {
 	import com.adobe.gpslib.gpx.Waypoint;
-	import com.adobe.gpslib.gpx.extensions.loader.EXTLoader1_1;
 	import com.adobe.gpslib.gpx.waypoint.GpsFix;
 	import com.adobe.utils.DateUtil;
 	
@@ -42,8 +41,6 @@ package com.adobe.gpslib.gpx.loader.waypoint
 			waypoint.pdop = xml.pdop;
 			waypoint.ageOfGpsData = xml.ageofgpsdata;
 			waypoint.dgpsid = xml.dgpsid;
-			//var e : Event = new Event('gpxLoad');
-			//dispatchEvent('gpxLoad');
 			return waypoint;
 		}
 		
@@ -85,7 +82,7 @@ package com.adobe.gpslib.gpx.loader.waypoint
 			if ( wpt.pdop ) { pt.pdop = wpt.pdop; }
 			if ( wpt.ageOfGpsData ) { pt.ageofgpsdata = wpt.ageOfGpsData; }
 			if ( wpt.dgpsid ) { pt.dgpsid = wpt.dgpsid; }
-			//if ( wpt.extensions.length != 0 ) { pt.extensions = EXTLoader1_1.toXMLString(wpt.extensions); }
+
 			return pt;			
 		}
 	}
