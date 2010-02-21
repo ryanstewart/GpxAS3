@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   nativeDragEnter="windowedapplication1_nativeDragEnterHandler(event)"
+					   nativeDragDrop="windowedapplication1_nativeDragDropHandler(event)" 
+					   xmlns:maps="com.google.maps.*">
+
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.gpslib.GPX;
+			import com.adobe.gpslib.GPXService;
+			import com.adobe.gpslib.gpx.Waypoint;
+			import com.adobe.gpslib.gpx.events.ParseEvent;
+			import com.google.maps.InfoWindowOptions;
+			import com.google.maps.LatLng;
+			import com.google.maps.MapEvent;
+			import com.google.maps.MapMouseEvent;
+			import com.google.maps.MapType;
+			import com.google.maps.controls.ZoomControl;
+			import com.google.maps.overlays.Marker;
+			import com.google.maps.overlays.MarkerOptions;
+			import com.google.maps.styles.FillStyle;
+			import com.google.maps.styles.StrokeStyle;
+
+			protected function windowedapplication1_nativeDragEnterHandler(event:NativeDragEvent):void
+			{
+				if(event.clipboard.hasFormat(ClipboardFormats.FILE_LIST_FORMAT))
+				{
+					var arrFiles:Array = event.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
+					
+					// This only supports one file, so make sure only file file is being dragged into the application
+					if(arrFiles.length == 1)
+					{
+						var file:File = File(arrFiles[0]);
+						
+						// Make sure that the file is a gpx file
+						if(file.extension == "gpx")
+						{
+							NativeDragManager.acceptDragDrop(this);		
+						}
+					}
+				}
+			}
+
+			protected function windowedapplication1_nativeDragDropHandler(event:NativeDragEvent):void
+			{
+				// This is the code that handles dealing with the file when it's dropped onto the AIR app.
+				var arrFiles:Array = event.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
+				var file:File = File(arrFiles[0]);
+				var stream:FileStream = new FileStream();
+					stream.open(file,FileMode.READ);
+				var fileData:String = stream.readUTFBytes(stream.bytesAvailable);
+					stream.close();
+			
+				var xmlData:XML = new XML(fileData);
+					
+				
+				/**
+				 * There are two different ways to load GPX data. 
+				 * 
+				 * The first is just to call the static load method and pass in XML data:
+				 * 
+				 * var gpx:GPX = GPX.load(xmlData);
+				 * 
+				 * 
+				 * 
+				 * The second is to use the service which lets you add an event listener
+				 * to the GPXService and wait until it's finished parsing the GPX file. This
+				 * can be helpful for larger files that may take time to parse.
+				 * 
+				 * var gpxSrv:GPXService = new GPXService();
+				 * gpxSrv.addEventListener(ParseEvent.PARSE_COMPLETE,onGpxParse);
+				 * gpxSrv.load(xmlData);
+				 * 
+				 * 
+				 * 
+				 * This example uses the service method.
+				 **/
+				
+				// Create a new GPXService
+				var gpxSrv:GPXService = new GPXService();
+					// This event will fire when the GPX file is finished loading and parsing
+					gpxSrv.addEventListener(ParseEvent.PARSE_COMPLETE,onGpxParse);
+					// Call the load method on the XML data 
+					gpxSrv.load(xmlData);				
+								
+			}
+			
+			protected function onGpxParse(event:ParseEvent):void
+			{
+				var len:int = event.gpx.arrWaypoints.length;
+
+				// This code parses through the waypoints and plots them on
+				// the Google map.
+				for(var i:int=0; i<len; i++)
+				{					
+					// Create a new Waypoint based on the array of Waypoints from the GPX file
+					var wpt:Waypoint = event.gpx.arrWaypoints[i] as Waypoint;
+					
+					// Use latitude/longitude to create a new Google LatLng object
+					var latLng:LatLng = new LatLng(wpt.latitude,wpt.longitude);
+					
+					// Set the marker options for the Google map marker
+					var markerOpt:MarkerOptions = new MarkerOptions({
+						strokeStyle: new StrokeStyle({color: 0x987654}),
+						fillStyle: new FillStyle({color: 0x223344, alpha: 0.8}),
+						radius: 12,
+						hasShadow: true
+						});
+					
+					// Create a new marker and then add it to the map
+					var marker:Marker = new Marker(latLng);
+
+						map.addOverlay(marker);
+				}
+				
+				// This centers the map on the first waypoint in the GPX array
+				var centerLatLng:LatLng = new LatLng(event.gpx.arrWaypoints[0].latitude,
+													event.gpx.arrWaypoints[0].longitude);
+					
+					map.setCenter(centerLatLng);
+			}
+
+			protected function map_mapevent_mapreadyHandler(event:MapEvent):void
+			{
+				// When the map is ready, change it to a Physical map and add a zoom control
+				map.setMapType(MapType.PHYSICAL_MAP_TYPE);
+				map.addControl(new ZoomControl());
+			}
+
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<maps:Map id="map" url="http://blog.digitalbackcountry.com" 
+			  key="ABQIAAAAEPSnxMQDa8BRcDfJB7EW1hTWCdQ-AJckUnuSppzI_Y_GSzvx2xRP-k43cI98_ddac2yNC8iG9QhgOQ" 
+			  width="100%" height="100%" mapevent_mapready="map_mapevent_mapreadyHandler(event)" />
+</s:WindowedApplication>

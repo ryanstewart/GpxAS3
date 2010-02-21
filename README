@@ -1,0 +1,5 @@
+This project takes GPX files and parses them into ActionScript objects. 
+
+Created by Ryan Stewart and Simeon Bateman.
+
+Source is in the src directory and an example use case is in the examples directory.
