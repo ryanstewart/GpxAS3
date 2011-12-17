@@ -3,7 +3,7 @@ package com.adobe.gpslib.gpx.loader.waypoint
 	import com.adobe.gpslib.gpx.Waypoint;
 	import com.adobe.gpslib.gpx.loader.groundspeak.CacheLoaderFactory;
 	import com.adobe.gpslib.gpx.waypoint.GpsFix;
-	
+
 	public class WPTLoader1_0
 	{
 		public function WPTLoader1_0()
@@ -13,7 +13,7 @@ package com.adobe.gpslib.gpx.loader.waypoint
 		{
 			namespace gpxNS = "http://www.topografix.com/GPX/1/0";
 			use namespace gpxNS;
-			
+
 			var lat : Number = xml.@lat;
 			var lon : Number = xml.@lon;
 			var waypoint : Waypoint = new Waypoint(lat, lon);
@@ -30,9 +30,9 @@ package com.adobe.gpslib.gpx.loader.waypoint
 					waypoint.time = new Date();
 					waypoint.time.setUTCFullYear(year, month, day);
 					waypoint.time.setUTCHours(hours, minutes, seconds);
-					
+
 				}
-			
+
 			waypoint.magneticVariation = xml.magvar;
 			waypoint.geoIdHeight = xml.geoidheight;
 			waypoint.name = xml.name;
@@ -50,14 +50,14 @@ package com.adobe.gpslib.gpx.loader.waypoint
 			waypoint.pdop = xml.pdop;
 			waypoint.ageOfGpsData = xml.ageofdgpsdata;
 			waypoint.dgpsid = xml.dgpsid;
-			
+
 			namespace geoNS = "http://www.groundspeak.com/cache/1/0";
 			use namespace geoNS;
 			if ( xml.cache.length() != 0 )
 			{
 				waypoint.cache = CacheLoaderFactory.load(xml.cache[0]);
 			}
-			
+
 			return waypoint;
 		}
 	}

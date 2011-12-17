@@ -5,12 +5,12 @@ package com.adobe.gpslib.gpx.extensions.status
 		public function StatusLoader1_1()
 		{
 		}
-		
+
 		public static function load (xml:XML) : StatusPoint
 		{
-			return null;	
+			return null;
 		}
-		
+
 		public static function toXMLString(sp:StatusPoint) : XML
 		{
 			var xml : XML = <statuspoint></statuspoint>;

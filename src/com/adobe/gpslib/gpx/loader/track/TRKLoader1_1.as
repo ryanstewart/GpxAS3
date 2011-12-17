@@ -3,7 +3,7 @@ package com.adobe.gpslib.gpx.loader.track
 	import com.adobe.gpslib.gpx.Track;
 	import com.adobe.gpslib.gpx.Waypoint;
 	import com.adobe.gpslib.gpx.loader.waypoint.WPTLoader1_1;
-	
+
 	public class TRKLoader1_1
 	{
 		public function TRKLoader1_1()
@@ -14,7 +14,7 @@ package com.adobe.gpslib.gpx.loader.track
 		{
 			namespace gpxNS = "http://www.topografix.com/GPX/1/1";
 			use namespace gpxNS;
-			
+
 			var name : String = xml.name;
 			var trackSegment : Array = new Array();
 			if( xml.trkseg.children().length() > 0 )
@@ -23,7 +23,7 @@ package com.adobe.gpslib.gpx.loader.track
 				{
 					var trkpt : Waypoint = WPTLoader1_1.load( xml.trkseg.trkpt[i] );
 					trackSegment.push(trkpt);
-				}				
+				}
 			}
 			var track : Track = new Track(name, trackSegment);
 			track.comment = xml.cmt;
@@ -36,7 +36,7 @@ package com.adobe.gpslib.gpx.loader.track
 			track.type = xml.type;
 			return track;
 		}
-		
+
 		public static function toXMLString(trk:Track) : XML
 		{
 			var xml : XML = <trk></trk>;
@@ -51,11 +51,11 @@ package com.adobe.gpslib.gpx.loader.track
 			xml.trkseg = <trkseg></trkseg>;
 			for ( var i : Number = 0; i < trk.trackSegment.length-1; i++ )
 			{
-				var trkpt : Waypoint = trk.trackSegment[i] as Waypoint;				
+				var trkpt : Waypoint = trk.trackSegment[i] as Waypoint;
 				xml.trkseg.appendChild(WPTLoader1_1.toXMLString(trkpt,"trkpt"));
 			}
 			return xml;
-			
-		}	
+
+		}
 	}
 }

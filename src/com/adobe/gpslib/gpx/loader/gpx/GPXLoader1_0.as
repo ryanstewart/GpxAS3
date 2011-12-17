@@ -4,27 +4,27 @@ package com.adobe.gpslib.gpx.loader.gpx
 	import com.adobe.gpslib.gpx.Waypoint;
 	import com.adobe.gpslib.gpx.events.ParseEvent;
 	import com.adobe.gpslib.gpx.loader.WPTLoaderFactory;
-	
+
 	import flash.events.EventDispatcher;
-	
+
 	public class GPXLoader1_0 extends EventDispatcher
 	{
 		public function GPXLoader1_0()
 		{
 		}
-		
+
 		public function load(xml:XML) : GPX
 		{
 			var gpx:GPX = new GPX();
 			namespace gpxNS = "http://www.topografix.com/GPX/1/0";
 			use namespace gpxNS;
-			
+
 			gpx.name = xml.name;
 			gpx.description = xml.desc;
 			gpx.author = xml.author;
 			gpx.link = xml.url;
 			gpx.linkText = xml.urlname;
-			
+
 			// Dealing with Time
 			var strTime : String = xml.time;
 			var year : Number = Number(strTime.substring(0,4));
@@ -45,7 +45,7 @@ package com.adobe.gpslib.gpx.loader.gpx
 			gpx.minLongitude = xml.bounds.@minlon;
 			gpx.maxLatitude = xml.bounds.@maxlat;
 			gpx.maxLongitude = xml.bounds.@maxlon;
-			
+
 			if ( XMLList(xml.wpt).length() > 0 )
 			{
 				for ( var j:int=0;j<xml.wpt.length();j++)
@@ -55,9 +55,9 @@ package com.adobe.gpslib.gpx.loader.gpx
 				}
 			}
 			//TODO: Need to write parsers for Track and Route
-			
+
 			return gpx;
-				
+
 		}
 	}
 }

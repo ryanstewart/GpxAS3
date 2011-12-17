@@ -2,18 +2,18 @@ package com.adobe.gpslib.gpx.loader.groundspeak.cache
 {
 	import com.adobe.gpslib.gpx.groundspeak.Cache;
 	import com.adobe.gpslib.gpx.groundspeak.Owner;
-	
+
 	public class CacheLoader1_0
 	{
 		public function CacheLoader1_0()
 		{
 		}
-		
+
 		public static function load(xml:XML):Cache
 		{
 			namespace geoNS = "http://www.groundspeak.com/cache/1/0";
 			use namespace geoNS;
-			
+
 			var cache:Cache = new Cache();
 			cache.id = xml.@id;
 			cache.available = xml.@available;
@@ -32,11 +32,11 @@ package com.adobe.gpslib.gpx.loader.groundspeak.cache
 			cache.encoded_hints = xml.encoded_hints;
 			cache.logs = new Array();
 			cache.travelbugs = new Array();
-			
-			
-			
-			
-			
+
+
+
+
+
 			return cache;
 		}
 	}

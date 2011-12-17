@@ -2,16 +2,16 @@ package com.adobe.gpslib.gpx.extensions
 {
 	import com.adobe.gpslib.gpx.extensions.speed.SpeedPoint;
 	import com.adobe.gpslib.gpx.extensions.status.StatusPoint;
-	
+
 	import mx.collections.ArrayCollection;
-	
+
 	public class Extensions extends ArrayCollection
 	{
 		//private var _arrExtensions : Array = new Array();
-		
+
 		public static const STATUS_POINT : String = "StatusPoint";
 		public static const SPEED_POINT : String = "SpeedPoint";
-		
+
 		public function Extensions()
 		{
 			super();
@@ -41,10 +41,10 @@ package com.adobe.gpslib.gpx.extensions
 						{
 							ac.addItem(this[j]);
 						}
-					}				
-					break;		
+					}
+					break;
 			}
-			
+
 			return ac;
 		}
 		*/
