@@ -3,7 +3,7 @@ package com.adobe.gpslib.gpx.loader
 	import com.adobe.gpslib.gpx.Waypoint;
 	import com.adobe.gpslib.gpx.loader.waypoint.WPTLoader1_0;
 	import com.adobe.gpslib.gpx.loader.waypoint.WPTLoader1_1;
-	
+
 	public class WPTLoaderFactory
 	{
 		public function WPTLoaderFactory()
@@ -13,7 +13,7 @@ package com.adobe.gpslib.gpx.loader
 		{
 				var name:String = wpt_xml.name();
 				trace(name);
-				switch ( name ) 
+				switch ( name )
 				{
 					case "http://www.topografix.com/GPX/1/1::wpt":
 					case "http://www.topografix.com/GPX/1/1::trkpt":
@@ -25,9 +25,9 @@ package com.adobe.gpslib.gpx.loader
 					default:
 						return null;
 				}
-				
+
 		}
-		
+
 		public static function toXMLString(wpt:Waypoint,type:String,ver:Number=1.1) : XML
 		{
 			switch ( ver )

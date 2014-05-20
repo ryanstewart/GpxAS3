@@ -2,10 +2,10 @@ package com.adobe.gpslib.gpx.loader.groundspeak
 {
 	import com.adobe.gpslib.gpx.groundspeak.Cache;
 	import com.adobe.gpslib.gpx.loader.groundspeak.cache.CacheLoader1_0;
-	
+
 	public class CacheLoaderFactory
 	{
-			
+
 		public static function load(cache_xml:XML):Cache
 		{
 			var name:String = cache_xml.name();
@@ -17,6 +17,6 @@ package com.adobe.gpslib.gpx.loader.groundspeak
 				return null;
 			}
 		}
-		
+
 	}
 }

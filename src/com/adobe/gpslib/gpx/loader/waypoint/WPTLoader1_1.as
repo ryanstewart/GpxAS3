@@ -4,21 +4,21 @@ package com.adobe.gpslib.gpx.loader.waypoint
 	import com.adobe.gpslib.gpx.extensions.loader.EXTLoader1_1;
 	import com.adobe.gpslib.gpx.waypoint.GpsFix;
 	import com.adobe.utils.DateUtil;
-	
+
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	
+
 	public class WPTLoader1_1 extends EventDispatcher
 	{
 		public function WPTLoader1_1()
 		{
 		}
-		
+
 		public static function load(xml:XML):Waypoint
 		{
 			namespace gpxNS = "http://www.topografix.com/GPX/1/1";
 			use namespace gpxNS;
-			
+
 			var lat : Number = xml.@lat;
 			var lon : Number = xml.@lon;
 			var waypoint : Waypoint = new Waypoint(lat, lon);
@@ -46,7 +46,7 @@ package com.adobe.gpslib.gpx.loader.waypoint
 			//dispatchEvent('gpxLoad');
 			return waypoint;
 		}
-		
+
 		public static function toXMLString(wpt:Waypoint,type:String) : XML
 		{
 			var pt:XML;
@@ -60,8 +60,8 @@ package com.adobe.gpslib.gpx.loader.waypoint
 				default:
 					pt = <wpt></wpt>;
 			}
-			
-			
+
+
 			pt.addNamespace("http://www.topografix.com/GPX/1/1");
 			pt.@lat = wpt.latitude;
 			pt.@lon = wpt.longitude;
@@ -86,7 +86,7 @@ package com.adobe.gpslib.gpx.loader.waypoint
 			if ( wpt.ageOfGpsData ) { pt.ageofgpsdata = wpt.ageOfGpsData; }
 			if ( wpt.dgpsid ) { pt.dgpsid = wpt.dgpsid; }
 			//if ( wpt.extensions.length != 0 ) { pt.extensions = EXTLoader1_1.toXMLString(wpt.extensions); }
-			return pt;			
+			return pt;
 		}
 	}
 }

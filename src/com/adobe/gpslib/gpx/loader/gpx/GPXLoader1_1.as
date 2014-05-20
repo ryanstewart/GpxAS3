@@ -11,9 +11,9 @@ package com.adobe.gpslib.gpx.loader.gpx
 	import com.adobe.gpslib.gpx.loader.track.TRKLoader1_1;
 	import com.adobe.gpslib.gpx.loader.waypoint.WPTLoader1_1;
 	import com.adobe.utils.DateUtil;
-	
+
 	import flash.events.EventDispatcher;
-	
+
 	public class GPXLoader1_1 extends EventDispatcher
 	{
 		public function GPXLoader1_1()
@@ -39,7 +39,7 @@ package com.adobe.gpslib.gpx.loader.gpx
 			gpx.minLongitude = xml.metadata.bounds.@minlon;
 			gpx.maxLatitude = xml.metadata.bounds.@maxlat;
 			gpx.maxLongitude = xml.metadata.bounds.@maxlon;
-			
+
 			for( var i:Number = 0; i < xmlList.length(); i++ )
 			{
 				if( xmlList[i].name() == 'http://www.topografix.com/GPX/1/1::wpt' ) {
@@ -53,11 +53,11 @@ package com.adobe.gpslib.gpx.loader.gpx
 					gpx.arrRoutes.push(rte);
 				}
 			}
-						
+
 			return gpx;
-				
+
 		}
-		
+
 		public static function toXMLString(gpx:GPX) : XML
 		{
 			var xml : XML = <gpx></gpx>;
@@ -74,14 +74,14 @@ package com.adobe.gpslib.gpx.loader.gpx
 			if ( gpx.linkType ) { xml.metadata.link.type = gpx.linkType; }
 			if ( gpx.time ) { xml.metadata.time = gpx.time.fullYearUTC; }
 			if ( gpx.keywords ) { xml.metadata.keywords = gpx.keywords; }
-			
-			if ( gpx.minLatitude || gpx.minLongitude || gpx.maxLatitude || gpx.maxLongitude ) { 
+
+			if ( gpx.minLatitude || gpx.minLongitude || gpx.maxLatitude || gpx.maxLongitude ) {
 				xml.metadata.bounds.@minlat;
 				xml.metadata.bounds.@minlon;
 				xml.metadata.bounds.@maxlat;
 				xml.metadata.bounds.@maxlon;
 			}
-			
+
 			for ( var k : Number = 0; k < gpx.arrWaypoints.length-1; k++ )
 			{
 				var wpt : Waypoint = gpx.arrWaypoints[k] as Waypoint;
@@ -89,11 +89,11 @@ package com.adobe.gpslib.gpx.loader.gpx
 			}
 			for ( var i : Number = 0; i < gpx.arrTracks.length; i++ )
 			{
-				var trk : Track = gpx.arrTracks[i] as Track;				
+				var trk : Track = gpx.arrTracks[i] as Track;
 				xml.appendChild(TRKLoader1_1.toXMLString(trk));
 			}
 			for ( var j : Number = 0; j < gpx.arrRoutes.length; j++ )
-			{			
+			{
 				var rte : Route = gpx.arrRoutes[j] as Route;
 				xml.appendChild(RTELoader1_1.toXMLString(rte));
 			}
